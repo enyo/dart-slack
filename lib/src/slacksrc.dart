@@ -24,12 +24,17 @@ class Message {
   List<Attachment> attachments;
 
   /// Creates a [Message] object which can be sent to a Slack channel
-  Message(this.text, {this.username, this.channel, this.icon_emoji,
-      this.icon_url, this.attachments});
+  Message(this.text,
+      {this.username,
+      this.channel,
+      this.icon_emoji,
+      this.icon_url,
+      this.attachments});
 
   /// Prints out the [Map] that this object represents
+  @override
   String toString() {
-    Map message = new Map();
+    final message = {};
 
     if (text != null) message['text'] = text;
 
@@ -42,8 +47,7 @@ class Message {
     if (icon_emoji != null) message['icon_emoji'] = icon_emoji;
 
     if (attachments != null) {
-      List attached_maps = [];
-      for (Attachment a in attachments) attached_maps.add(a._toMap());
+      final attached_maps = attachments.map((a) => a._toMap());
 
       message['attachments'] = attached_maps;
     }
@@ -81,28 +85,32 @@ class Attachment {
   List<Field> fields;
 
   /// Creates an [Attachment] object which can be added to a [Message] object
-  Attachment(this.fallback, {this.pretext, this.text, this.title, this.title_link, this.image_url, this.thumb_url, this.color, this.fields});
+  Attachment(this.fallback,
+      {this.pretext,
+      this.text,
+      this.title,
+      this.title_link,
+      this.image_url,
+      this.thumb_url,
+      this.color,
+      this.fields});
 
   /// Prints out the [Map] that this object represents
+  @override
   String toString() => jsonEncode(_toMap());
 
   Map _toMap() {
-    Map attachment = new Map()..['fallback'] = fallback;
-
-    if (pretext != null) attachment['pretext'] = pretext;
-    if (title != null) attachment['title'] = title;
-    if (title_link != null) attachment['title_link'] = title_link;
-    if (text != null) attachment['text'] = text;
-    if (color != null) attachment['color'] = color;
-    if (image_url != null) attachment['image_url'] = image_url;
-    if (thumb_url != null) attachment['thumb_url'] = thumb_url;
-
-    if (fields != null) {
-      List attach_fields = [];
-      for (Field a in fields) attach_fields.add(a._toMap());
-
-      attachment['fields'] = attach_fields;
-    }
+    final attachment = <String, dynamic>{
+      'fallback': fallback,
+      if (pretext != null) 'pretext': pretext,
+      if (title != null) 'title': title,
+      if (title_link != null) 'title_link': title_link,
+      if (text != null) 'text': text,
+      if (color != null) 'color': color,
+      if (image_url != null) 'image_url': image_url,
+      if (thumb_url != null) 'thumb_url': thumb_url,
+      if (fields != null) 'fields': fields.map((f) => f._toMap()).toList(),
+    };
 
     return attachment;
   }
@@ -122,13 +130,12 @@ class Field {
   Field(this.title, this.value, {this.short});
 
   /// Prints out the [Map] that this object represents
+  @override
   String toString() => jsonEncode(_toMap());
 
-  Map _toMap() {
-    Map field = new Map()
-      ..['title'] = title
-      ..['value'] = value
-      ..['short'] = short;
-    return field;
-  }
+  Map _toMap() => {
+        'title': title,
+        'value': value,
+        'short': short,
+      };
 }
