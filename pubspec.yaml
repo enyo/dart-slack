@@ -1,15 +1,17 @@
 name: slack
-version: 2.0.0
-author: Paul VanKeuren <paul.vankeuren@gmail.com>, Robert McDermot <robert.mcdermot@gmail.com>
-description: |-
-  Package for accessing and utilizing the Slack webhook API.
-homepage: https://github.com/ChildrenOfUr/dart-slack
+version: 3.0.0
+description: Package for accessing and utilizing the Slack webhook API.
+repository: https://github.com/ChildrenOfUr/dart-slack
 
 environment:
   sdk: '>=2.3.0 <3.0.0'
 
 dependencies:
-  http: "^0.11.2"
+  http: "^0.12.0"
+  json_annotation: ^3.0.0
 
 dev_dependencies:
   pedantic: ^1.9.0
+  json_serializable: ^3.0.0
+  build_runner: ^1.0.0
+  test: ^1.0.0

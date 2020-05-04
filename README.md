@@ -1,46 +1,28 @@
-dart-slack
-==========
+# Dart [slack](http://slack.com) API library
 
-Dartlang interface to the Slack Webhook API
+This library interacts with the
+[Slack Webhook API](https://api.slack.com/messaging/webhooks).
 
-API Documentation available on [Pub](https://pub.dartlang.org/packages/slack)
+It will allow you to post (formatted) messages into your Slack channels after
+you've created a Slack App and got the webhook link to post to (instructions
+are on the Slack Webhook API page).
+
+This library works on the server and in the browser. Just be aware that if you
+use this in your browser, you're going to expose your API key.
 
 ## Simple Start
 
-    import 'package:slack/html/slack';
-    // or 
-    import 'package:slack/io/slack';
+    import 'package:slack/slack';
     
-    main() {
+    main() async {
       Slack slack = new Slack('webhook-url');
-      Message message = new Message('foo message',username:'bar-user');      
-      slack.send(message);
+      final httpResponse =
+            await slack.send(Message(text: 'This is your computer talking.'));
     }
 
-## Attachment Support
 
-Minimally attachments require a 'fallback' [String], in the first field.
+See the [example/example.dart] on how to use blocks in your messages.
 
-    Attachment bugReport = new Attachment("I can't use Slack!",
-       pretext: 'A Critical Bug Reported',
-       text   : "I can't use Slack!",
-       color  : 'danger');
+# License
 
-    Message message = new Message('Bug Report:', username: 'bugBot', attachments: [bugReport]);
-    slack.send(message);
-    
-## Cascades
-
-Messages, Attachments, and Fields are mostly just data containers.
-This means that you have a choice between setting their values in the constructor or setting them in a cascade.
-For example, Attachments could be defined like so:
-
-    Attachment bugReport = new Attachment("I can't use Slack!")
-       ..pretext = 'A Critical Bug Reported'
-       ..text   = "I can't use Slack!"
-       ..color  = 'danger';
-
-    Message message = new Message('Bug Report:')
-        ..username    = 'bugBot'
-        ..attachments = [bugReport];
-    slack.send(message);
+[CC0 1.0 Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/deed)
